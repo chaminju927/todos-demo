@@ -33,11 +33,11 @@ taskController.getTask = async (req, res) => {
 
 taskController.putTask = async (req, res) => {
   try {
-    const { taskId } = req.params;
-    const task = await Task.findOne({ taskId: Number(taskId) });
-
-    task.isComplete = !task.isComplete;
-    const updatedTask = await task.save();
+     const updatedTask = await Task.findByIdAndUpdate(
+      req.params.id,
+      req.body, 
+      { new: true}
+    );
     res.status(200).json({ status: "updated", data: updatedTask });
   } catch (err) {
     res.status(400).json({ status: "fail", error: err });
