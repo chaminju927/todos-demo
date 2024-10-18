@@ -36,14 +36,13 @@ taskController.putTask = async (req, res) => {
     const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
+    res.status(200).json({ status: "updated", data: updatedTask });
 
     if (!updatedTask) {
       return res
         .status(404)
         .json({ status: "fail", message: "Task not found" });
     }
-
-    res.status(200).json({ status: "success", data: updatedTask });
   } catch (err) {
     res.status(400).json({ status: "fail", error: err });
   }
